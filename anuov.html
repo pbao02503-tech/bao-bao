@@ -9,47 +9,53 @@
     
     <h1>                   NHÀ HÀNG BAO BAO       </h1>
     <hr></hr> 
+    <hr></hr>
     <img src="https://cdn0212.cdn4s.com/media/nha-hang-phong-cach-indochine-2.jpg" height="400" width="600" >
      <form action="/action_page.php"> <legend for="fname">nhập tên của bạn : </legend><br>
         <input tuype="text" id="fname"name="fname"><br><br>
+        <p>chọn số lượng</p>          
+           <form action="/action_page.php">
+              <label for="quantity"> số lượng :</label>
+                 <input type="number" id="quantity" name="quantity" min="1" max="10">
+                 <input type="submit" value=" gửi">
         
     <h2> nhà hàng bao bao xin kính chào quý khách  </h2>
          <p> nhà hàng hôm nay xin được phục vụ quý<br>quý khách cần phục vụ có thể ra quầy  </p>
          <hr></hr>
+       
     <h3> <menu>hôm nay bao gồm có </menu></h3>
       
         <oi><li>phở bò</li>
+          <form> <input type="radio" id="phở"name="fav-lenguage"value="phở">
+            <label for="phở"></label>
                 <object data="https://cdn.tgdd.vn/2020/11/CookProduct/pho-bo-thumbnail-1200x676.jpg" height="300" width="350"></object></oi>
        <oi> 
         <li>- tôm hùng </li>
+        <form><input type="radio" id=" tôm hùng"name="fav-lenguage"value="tôm hùng"
+          <label for="tôm hùng"></label>
                  <object data="https://cdn.tgdd.vn/Files/2021/12/27/1407261/tong-hop-7-mon-tom-hum-nuong-sieu-hap-dan-an-la-ghien-202112272120524930.jpg"height="300" width="350"></object>
-        </oi>
+        </oi></form>
        
         <oi> <li> món á </li>
+       <form><input type="radio" id="món á"name="fav-lenguage"value="món á"
+          <label for="món á"></label>
+                <object data="https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2022/12/27/mon-16-16720440633021401553814-1672128656467-16721286566892039014373.jpg" height="300" width="350"></object></form>
+        <oi> 
+          
+             <p> quý khách vui lòng chọn món tại đây </p>
 
-                <object data="https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2022/12/27/mon-16-16720440633021401553814-1672128656467-16721286566892039014373.jpg" height="300" width="350"></object>
-              
-  
-
-<p> quý khách vui lòng chọn món tại đây </p>
-
-<form action="/action_page.php">
-  <label for=""></label>
-  <select id="eating" name="món ăn">
-    <option value=" phở"> phở</option>
-    <option value="tôm hùm">tôm hùm</option>
-    <option value="món á ">món á</option>
-    <option value=" nước ngọt"> nước ngọt </option>
-  </select>
-  <input type="submit">
+        <form action="/action_page.php">
+          <label for=""></label>
+           <select id="eating" name="chọn loại nước ">
+           <option value="vang trắng">vang trắng</option>
+            <option value="nước khoáng">nước khoáng</option>
+            <option value=" nước trái cây">nước trái cây</option>
+            <option value=" nước ngọt"> nước ngọt </option>
+           </select>
+           <input type="submit">
 </form>
-      
-
-       
-     
-    
- 
 </body>
 </html>
+
 
 
