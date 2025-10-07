@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bài tập về nhà </title>
+</head><style>
+    .btn-group{
+        display: flex;
+        flex-wrap: wrap;
+    }
+.button {
+    background-color:rgb(6, 115, 38) ;
+    border:none;
+    olor: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-group .button:hover {
+  background-color: dodgerblue;
+}
+table{ border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color: rgb(48, 134, 183);}
+p{
+    background-color: aquamarine;
+    padding: 10px;
+}
+
+    .note {
+      width: 120px;
+      height: 120px;
+      background: yellow;
+      border: 2px solid #999;
+      padding: 10px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+    .note p { margin: 0; }
+    .note {
+      position: fixed;  
+      top: 50px;
+      right: 30px;
+    }
+</style>
+<body>
+    <div class=" btn- group">
+       <button class=" button" >trang chủ </button>
+        <button class="button"> bảng điểm </button>
+             <th><button class="button">liên hệ</button>
+    </div>
+    <table>
+        <tr>
+            <th>tên học sinh </th>
+    <th>môn toán </th>
+    <th>văn học </th>
+  </tr>
+  <tr>
+    <td>nguyễn văn a</td>
+    <td>8</td>
+    <td>9</td>
+  </tr>
+  <tr>
+    <td>trinh văn b</td>
+    <td>9</td>
+    <td>9</td>
+  </tr>
+  <tr>
+    <td>nguyên công c</td>
+    <td>8</td>
+    <td>8</td>
+        </tr>
+    </table>
+<p class="ex1">
+    <span> chào mừng</span>
+    <samp> hoạt động</samp>
+    <samp> cài đặt </samp>
+</p><div class="content">
+    <div class="note">
+      <p><b>ghi chú nhỏ:</b></p>
+      <p>Hãy thay đổi<br>viết tiếp tương lai</p>
+    </div>
+</body>
+</html>
