@@ -19,6 +19,54 @@ P{
     front-family: verdana;
     font-size:20px;
 }
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+header {
+  background-color: #4e2121;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: rgb(255, 255, 255);
+}
+nav {
+  float: left;
+  width: 30%;
+  height: 300px; 
+  background: #cab9b9;
+  padding: 20px;
+}
+nav ul {
+  list-style-type: none;
+  padding: 4;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  background-color: #f1f1f1;
+  height: 300px;
+}
+section::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+footer {
+  background-color: #777;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
 </style></head>
 <body>
     
@@ -70,6 +118,41 @@ P{
            <input type="submit">
 
 </form>
+header>
+  <h2>món ăn đơn giản có thể tham khảo chút  </h2>
+</header>
 
+<section>
+  <nav>
+    <ul>
+      <li><a href="#">phở </a></li>
+    </ul>
+  </nav>
+  
+  <article>
+    <h1>phở </h1>
+    <p>Phở Hà Nội là món ăn trứ danh với nước dùng trong, ngọt thanh từ xương bò/gà ninh, bánh phở mềm dai, thịt bò/gà mềm tươi, và các loại rau thơm<br> Món này nổi tiếng với sự tinh tế trong cách chế biến, tạo nên hương vị đậm đà, đặc trưng của Hà thành, và là biểu tượng ẩm thực Việt Nam trên thế giới. </p>
+    <p>Phở và Di sản Văn hóa<br>
+Phở không chỉ là một món ăn ngon mà còn là một phần không thể thiếu trong tâm thức người Hà Nội và đã trở thành một biểu tượng của ẩm thực Việt Nam, thu hút cả du khách quốc tế. </p>
+  </article>
+</section>
+
+<footer>
+  <p>tham khảo thêm </p>
+</footer>
+ <section>
+  <nav>
+    <ul>
+      <li><a href="#">bánh mì </a></li>
+    </ul>
+  </nav>
+  <article> 
+    <h2>bánh mì </h2>
+    <p>Bánh mì là một loại baguette của Việt Nam với lớp vỏ ngoài giòn tan, ruột mềm, còn bên trong là phần nhân. Tùy theo văn hóa vùng miền hoặc sở thích cá nhân mà người ta có thể lựa chọn nhiều loại đồ ăn kèm khác nhau<br> ngoài ra tên gọi của bánh cũng phụ thuộc phần lớn vào những biến tấu ấy. </p>
+    <p> Do có giá thành phù hợp nên bánh đã trở thành món ăn rất được nhiều người ưa chuộng.</p>
+    <p> </p>
+  </article>
+  <footer> tiếp theo </footer>
+  
 </body>
 </html>
