@@ -1,86 +1,226 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-     <style>       
-         body {
-         	margin: 0;
-         	height: 100vh;
-         	display: flex;
-         	align-items: center;
-         	justify-content: center;
-         	background: black;
-         	overflow: hidden;
-         }
-         .container {
-         	font-size: 10px;
-         	width: 40em;
-         	height: 40em;
-         	position: relative;
-         }
-         .sun {
-         	position: absolute;
-         	top: 15em;
-         	left: 15em;
-         	width: 10em;
-         	height: 10em;
-         	background-color: yellow;
-         	border-radius: 50%;
-         	box-shadow: 0 0 3em white;
-         }
-         .earth, .moon {
-         	position: absolute;
-         	border-style: solid;
-         	border-color: white transparent transparent transparent;
-         	border-width: 0.1em 0.1em 0 0;
-         	border-radius: 50%; 
-         }
-         .earth {
-         	top: 5em;
-         	left: 5em;
-         	width: 30em;
-         	height: 30em;
-         	animation: orbit 36.5s linear infinite;
-         }
-         .moon {
-         	top: 0;
-         	right: 0;
-         	width: 8em;
-         	height: 8em;
-         	animation: orbit 2.7s linear infinite;
-         }
-         .earth::before,
-         .moon::before {
-         	content: '';
-         	position: absolute;
-         	border-radius: 50%;
-         }
-         .earth::before {
-         	top: 2.8em;
-         	right: 2.8em;
-         	width: 3em;
-         	height: 3em;
-         	background-color: aqua;
-         }
-         .moon::before {
-         	top: 0.8em;
-         	right: 0.2em;
-         	width: 1.2em;
-         	height: 1.2em;
-         	background-color: silver;
-         }
-         @keyframes orbit {
-         	to {
-         		transform: rotate(360deg);
-         	}
-         }
-     </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Tra cứu bệnh lý — MedLookup (Prototype)</title>
+<style>
+:root {
+  --accent:#0b7edb;--muted:#666;--card:#fff;--bg:#f5f7fb;
+}
+*{box-sizing:border-box}
+body{
+  font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial,sans-serif;
+  margin:0;background:var(--bg);color:#111;
+}
+header{
+  background:linear-gradient(90deg,#0b7edb 0%,#3aa0e8 100%);
+  color:#fff;padding:20px;
+}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+nav{display:flex;align-items:center;gap:16px}
+.brand{font-weight:700;font-size:20px}
+.search-wrap{margin:18px 0}
+.search{display:flex;gap:8px}
+.search input{flex:1;padding:12px;border-radius:8px;border:none;font-size:16px}
+.search button{background:#fff;color:var(--accent);border:none;padding:10px 14px;border-radius:8px;font-weight:600;cursor:pointer}
+.row{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+.card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(15,30,50,0.06)}
+h2{margin:0 0 12px}
+.diseases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.disease-card{
+  display:flex;gap:12px;align-items:center;
+  padding:10px;border-radius:10px;border:1px solid #eee;background:#fff;
+  transition:transform 0.2s ease, box-shadow 0.2s;
+  cursor:pointer;
+}
+.disease-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+.disease-card img{width:72px;height:72px;object-fit:cover;border-radius:8px}
+.disease-card h3{margin:0;font-size:16px}
+.meta{color:var(--muted);font-size:13px}
+.alerts{display:flex;flex-direction:column;gap:8px}
+.alert{background:#fff4f0;border-left:4px solid #ff7a45;padding:10px;border-radius:8px}
+.doctors-list{display:grid;grid-template-columns:1fr;gap:12px}
+.doctor{display:flex;gap:12px;align-items:center;padding:12px;background:#fff;border-radius:10px}
+.doctor img{width:64px;height:64px;border-radius:50%;object-fit:cover}
+footer{padding:24px;text-align:center;color:var(--muted)}
+
+/* Popup overlay */
+#popupOverlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.5);
+  display:none;align-items:center;justify-content:center;
+  z-index:1000;
+}
+.popup{
+  background:#fff;border-radius:12px;max-width:500px;width:90%;
+  padding:20px;box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  animation:fadeIn 0.3s ease;
+}
+.popup img{
+  width:100%;border-radius:10px;margin-bottom:12px;object-fit:cover;max-height:220px;
+}
+.popup h3{margin:0 0 8px;color:var(--accent)}
+.popup p{margin:4px 0;color:#333;line-height:1.5}
+.close-btn{
+  background:var(--accent);color:#fff;border:none;padding:8px 12px;
+  border-radius:6px;cursor:pointer;margin-top:12px;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(0.95)}
+  to{opacity:1;transform:scale(1)}
+}
+@media(max-width:900px){
+  .row{grid-template-columns:1fr}
+  .diseases-grid{grid-template-columns:1fr}
+  .container{padding:16px}
+  .search input{font-size:15px}
+}
+/* Doctors */
+.doctor-card{display:flex;align-items:center;gap:12px;background:#fff;padding:10px;border-radius:10px;margin-bottom:10px;box-shadow:0 3px 8px rgba(0,0,0,0.05)}
+.doctor-card img{width:64px;height:64px;border-radius:50%;object-fit:cover}
+.doctor-card h4{margin:0}
+.contact-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.contact-buttons a{display:inline-block;padding:8px 12px;border-radius:8px;font-size:14px;text-decoration:none;font-weight:600;color:#fff;transition:0.2s}
+.call{background:#28a745}
+.call:hover{background:#1e7e34}
+.zalo{background:#0b7edb}
+.zalo:hover{background:#086cc5}
+.mail{background:#ff7a45}
+.mail:hover{background:#e66a34}
+</style>
 </head>
 <body>
-	<div class="container">
-		<div class="sun"></div>
-		<div class="earth">
-			<div class="moon"></div>
-	    </div>
-	</div>
+<header>
+  <div class="container">/--đầu trang --/
+    <nav>
+      <div class="brand">MedLookup</div>
+      <div style="margin-left:auto;display:flex;gap:12px;align-items:center">
+        <a href="#" style="color:#fff;text-decoration:none">Trang chủ</a>
+        <a href="#doctors" style="color:#fff;text-decoration:none">Bác sĩ</a>
+        <a href="#contact" style="color:#fff;text-decoration:none">Liên hệ</a>
+      </div>
+    </nav>
+/--thanh tìm kiếm bệnh --/
+    <div class="search-wrap">
+      <form id="searchForm" class="search" onsubmit="return false">
+        <input id="q" placeholder="Tìm triệu chứng (ví dụ: ho, sốt, đau đầu...)" aria-label="Tìm triệu chứng" />
+        <button id="searchBtn" class="btn">Tìm kiếm</button>
+      </form>
+      <div style="margin-top:8px;color:#e6f5ff;font-size:14px">
+        Gợi ý: sốt, ho, đau họng, mệt mỏi, phát ban
+      </div>
+    </div>
+  </div>
+</header>
+/--khu vực chiệu chứng bệnh --/
+<main class="container" style="margin-top:18px">
+  <div class="row">
+    <section>
+      <div class="card">
+        <h2>Danh mục bệnh phổ biến</h2>
+
+        <div class="diseases-grid" id="diseaseGrid">
+          <div class="disease-card" data-name="Cảm cúm" data-desc="Cảm cúm là bệnh do virus cúm gây ra, thường xuất hiện khi thời tiết lạnh hoặc giao mùa. Gây sốt, ho, sổ mũi, đau họng." data-img="https://tse1.mm.bing.net/th/id/OIP.6aKYdgMSceotfDJZndy3OQHaEK?pid=Api&P=0&h=180">
+            <img src="https://tse4.mm.bing.net/th/id/OIP.Ir9qAnN0VtKDbSbwuU5ykQHaE8?pid=Api&P=0&h=180" alt="Cảm cúm">
+            <div><h3>Cảm cúm</h3><div class="meta">Triệu chứng: Sốt nhẹ, ho, sổ mũi, đau đầu.</div></div>
+          </div>
+
+          <div class="disease-card" data-name="Sốt xuất huyết" data-desc="Bệnh truyền nhiễm do muỗi vằn Aedes truyền, gây sốt cao, đau khớp, mệt mỏi và phát ban." data-img="https://tse3.mm.bing.net/th/id/OIP.EzO182_yhyfxiBOGhXEWywHaEK?pid=Api&P=0&h=180">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.45tgTq7Ixo1pRyYrF2IKFgHaEK?pid=Api&P=0&h=180" alt="Sốt xuất huyết">
+            <div><h3>Sốt xuất huyết</h3><div class="meta">Triệu chứng: Sốt cao, phát ban, đau khớp, mệt mỏi.</div></div>
+          </div>
+
+          <div class="disease-card" data-name="Đau đầu" data-desc="Đau đầu có thể do căng thẳng, mất ngủ hoặc rối loạn thần kinh. Cần nghỉ ngơi và uống đủ nước." data-img="https://tse2.mm.bing.net/th/id/OIP.9KfobrwIFauZOPmHZS_lLgHaFF?pid=Api&P=0&h=180">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.m56yjyP4fHgEh_sZQXEJ0gHaFC?pid=Api&P=0&h=180" alt="Đau đầu">
+            <div><h3>Đau đầu</h3><div class="meta">Triệu chứng: Căng thẳng, đau vùng trán, cổ hoặc thái dương.</div></div>
+          </div>
+
+          <div class="disease-card" data-name="Viêm họng" data-desc="Viêm họng thường do vi khuẩn hoặc virus, khiến cổ họng đau rát, khàn tiếng và khó nuốt." data-img="https://tse1.mm.bing.net/th/id/OIP.OvhTnSsOY4ND-REhuo2KjAHaFF?pid=Api&P=0&h=180">
+            <img src="https://tse4.mm.bing.net/th/id/OIP.q9Q3w1chz9PZSCsxuda5PwHaE8?pid=Api&P=0&h=180" alt="đau họng">
+            <div><h3>Viêm họng</h3><div class="meta">Triệu chứng: Đau rát cổ họng, ho, khó nuốt, khàn tiếng.</div></div>
+          </div>
+
+          <div class="disease-card" data-name="COVID-19" data-desc="Bệnh truyền nhiễm do virus SARS-CoV-2 gây ra, có thể gây sốt, ho, khó thở, mất vị giác hoặc khứu giác." data-img="https://tse1.mm.bing.net/th/id/OIP.74ZhsxKCOkrBLMzDEoX9VAHaEi?pid=Api&P=0&h=180">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.g6FHHaQ3FKyD6g0VVeGQiwHaDX?pid=Api&P=0&h=180" alt="COVID-19">
+            <div><h3>COVID-19</h3><div class="meta">Triệu chứng: Sốt, ho khan, mệt mỏi, mất vị giác, khó thở.</div></div>
+          </div>
+        </div>
+      </div>
+          /!---cảnh báo --/
+      <div class="card" style="margin-top:18px;">
+        <h2>Tin cảnh báo y tế</h2>
+        <div class="alerts">
+          <div class="alert">⚠️ Cảnh báo dịch sốt xuất huyết tăng tại miền Nam.</div>
+          <div class="alert">💊 Bộ Y tế khuyến cáo tiêm phòng cúm mùa.</div>
+        </div>
+      </div>
+    </section>
+/!--khu vực bác sĩ--/
+    <aside>
+        <h2>Bác sĩ nổi bật</h2>
+        <div class="doctor">
+        <aside id="doctors">
+         <div class="card">
+            <img src="https://cdn.kienthuc.net.vn/images/1832dc71fc983c4dff413425ffe92a43ef6366dbf44a6bb93b4c7bb5348f9c7897036c66f2a11d509f694ab57fb09444c2fbaa0242cf184c60b60105601ab07d701f4e61dea3c69ce5d4985ae1e2631c2b5caa5086be09800fd98b135d93456e/nhung-bac-si-phau-thuat-viet-nam-noi-tieng-the-gioi.jpg" alt="bác sĩ">
+            <div><strong>PGS.TS trần ngọc lương </strong><br><span class="meta">chuyên gia nổi tiếng thế giới </span></div>
+                        <a href="tel:0345366715" class="call">📞 Gọi điện</a>
+                        <a href="https://zalo.me/0345366715" class="zalo" target="_blank">💬 Nhắn Zalo</a>
+                        <a href="mailto:bs.nguyenvana@example.com" class="mail">✉️ Gửi email</a>
+          </div></div>
+          <div class="doctor">
+            <aside id="doctors">
+              <div class="card">
+            <img src="https://cdnv2.tgdd.vn/mwg-static/ankhang/Medicine/Kiem-duyet-vien-nguyen-phuoc-loc.jpg" alt="Bác sĩ">
+            <div><strong>Bác sĩ CKI Nguyễn Phước Lộc</strong><br><span class="meta">nội dung khám tổng quát </span></div>
+                 <a href="tel:0345366715" class="call">📞 Gọi điện</a>
+                 <a href="https://zalo.me/0345366715" class="zalo" target="_blank">💬 Nhắn Zalo</a>
+                 <a href="mailto:bs.nguyenvana@example.com" class="mail">✉️ Gửi email</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  © 2025 MedLookup — Trang tra cứu bệnh lý & triệu chứng. Prototype.
+</footer>
+
+<!-- Popup -->
+<div id="popupOverlay">
+  <div class="popup">
+    <img id="popupImg" src="" alt="">
+    <h3 id="popupTitle"></h3>
+    <p id="popupDesc"></p>
+    <button class="close-btn" onclick="closePopup()">Đóng</button>
+  </div>
+</div>
+
+<script>
+const popupOverlay = document.getElementById('popupOverlay');
+const popupImg = document.getElementById('popupImg');
+const popupTitle = document.getElementById('popupTitle');
+const popupDesc = document.getElementById('popupDesc');
+
+document.querySelectorAll('.disease-card').forEach(card => {
+  card.addEventListener('click', () => {
+    popupImg.src = card.dataset.img;
+    popupTitle.textContent = card.dataset.name;
+    popupDesc.textContent = card.dataset.desc;
+    popupOverlay.style.display = 'flex';
+  });
+});
+
+function closePopup() {
+  popupOverlay.style.display = 'none';
+}
+popupOverlay.addEventListener('click', e => {
+  if (e.target === popupOverlay) closePopup();
+});
+</script>
 </body>
 </html>
+
