@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MedLookup — Tra cứu bệnh lý & triệu chứng</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700|Inter:400,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:#0b85fa; --secondary:#24e3be; --bg:#f7fcff; --nav:#eaf6fb;
+      --card:#fff; --muted:#6b7798; --shadow:#d3eafc; --radius:22px; --transition:.17s cubic-bezier(.43,.2,.23,1);
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',sans-serif; background:var(--bg); margin:0; color:#222;}
+    header { background:var(--nav); box-shadow:0 2px 18px #eaf4fe4c; position:sticky;top:0;z-index:100;}
+    .nav {max-width:1250px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:13px 22px 8px 11px;}
+    .logo {display:flex;align-items:center;gap:7px;font-size:1.43rem;font-weight:700;color:var(--primary);}
+    .logo-icon {background:#d6f2fc;border-radius:50%;padding:8px 11px 7px 11px;font-size:2rem;}
+    .menu {display:flex;gap:6px;}
+    .menu a {
+      text-decoration:none;color:#213e54;padding:8px 19px 9px 19px; border-radius:14px;font-weight:600;font-size:1.08rem;transition:var(--transition);position:relative;}
+    .menu a.active,.menu a:hover {
+      color:#fff;background:linear-gradient(97deg,#0b85fa 70%,#17eae0 120%);
+      box-shadow:0 4px 17px #19e6c122;
+    }
+    main {max-width:1250px;margin:35px auto 0 auto;padding:0 15px;}
+    .hero {display:flex;align-items:center;gap:46px;background:linear-gradient(90deg,#e8f8fe 68%,#fdfffc);border-radius:var(--radius);padding:46px 28px 30px 44px;box-shadow:0 4px 85px #33eeff15;}
+    .hero-img {flex:0 0 270px;}
+    .hero-img img{width:270px;border-radius:19px;box-shadow:0 6px 64px #12e6c619;}
+    .hero-content {flex:1;}
+    .hero h1 {font-size:2.41rem;margin:0 0 6px 0;font-family:'Montserrat',sans-serif;color:var(--primary);}
+    .hero p {font-size:1.19rem;color:#207e92;}
+    .search-box {
+      margin:34px 0 0 0; background:#fff;padding:14px 15px;border-radius:16px;max-width:560px;
+      display:flex;align-items:center;box-shadow:0 3px 24px #acf2f656;gap:9px;font-size:1.13rem;}
+    .search-box i {font-size:1.33rem;color:var(--secondary);}
+    .search-box input {border:none;font-size:1.13rem;flex:1;padding:11px 2px;outline:none;background:transparent;}
+    .search-box button {
+      color:#fff;background:linear-gradient(93deg,#0b85fa,#12e6da 97%);
+      border:none;border-radius:11px;padding:10px 24px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:1.03rem;cursor:pointer;transition:var(--transition);}
+    .search-box button:hover {opacity:0.94;}
+    .guide {color:#1bb37a;font-size:14px;margin-top:13px;}
+    .section {margin-top:48px;}
+    .section-title {font-family:'Montserrat',sans-serif;font-size:1.22rem;font-weight:600;margin-bottom:17px;color:var(--primary);}
+    .diseases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(295px,1fr));gap:32px;margin-top:12px;}
+    .disease-card {
+      background:#fff;border-radius:var(--radius);box-shadow:0 8px 45px #56eefa22;
+      padding:24px 19px 14px 16px;display:flex;flex-direction:column;align-items:center;transition:var(--transition);cursor:pointer;position:relative;min-height:245px;}
+    .disease-card:hover{box-shadow:0 16px 64px #0be7e56c,0 6px 32px #128af90d;transform:scale(1.027) translateY(-4px);}
+    .disease-card img{width:120px;height:120px;object-fit:cover;border-radius:16px;box-shadow:0 2px 18px #23f7e528;background:#f4fdfe;}
+    .card-images {display:flex;gap:8px;margin-bottom:11px;}
+    .card-images img{width:48px;height:48px;border-radius:6px;object-fit:cover;}
+    .disease-info{text-align:center;}
+    .disease-info h3{margin:13px 0 5px 0;font-size:1.21rem;font-family:'Montserrat',sans-serif;color:var(--primary);}
+    .meta{font-size:15px;color:var(--muted);}
+    .view-detail-btn{
+      margin:18px 0 0 0;background:linear-gradient(90deg,#13b8fa,#20e7d3);color:#fff;padding:7px 22px;border:none;border-radius:22px;cursor:pointer;font-weight:600;font-size:15.5px;transition:var(--transition);}
+    .view-detail-btn:hover{opacity:.88;}
+    .doctor-list {display:grid;grid-template-columns:1fr 1fr;gap:27px 19px;}
+    .doctor-card {
+      background:#fff;border-radius:19px;box-shadow:0 1px 16px #18e3c751;padding:24px 18px 18px 15px;display:flex;align-items:center;gap:14px;transition:var(--transition);}
+    .doctor-card img{width:65px;height:65px;object-fit:cover;border-radius:50%;border:3px solid #eaf7fc;}
+    .doctor-info strong{font-family:'Montserrat',sans-serif;font-size:1.08rem;color:var(--primary);}
+    .doctor-info .meta{margin-bottom:7px;}
+    .contact-buttons a {display:inline-block;margin-right:8px;text-decoration:none;padding:7px 16px;border-radius:8px;font-weight:600;font-size:14px;color:#fff;box-shadow:0 2px 7px #c9f6e4;}
+    .call{background:#24c647;} .zalo{background:#12bff4;} .mail{background:#ff7a45;}
+    /* Trang chi tiết */
+    #disease-detail[hidden]{display:none;}
+    .disease-detail-card{background:#fff;border-radius:25px;box-shadow:0 10px 56px #24bce633;padding:38px 22px 22px 22px;max-width:740px;margin:32px auto;}
+    .disease-detail-main{display:flex;gap:40px;align-items:flex-start;}
+    .disease-main-img{width:200px;flex:0 0 200px;margin-right:15px;}
+    .disease-main-img img{width:100%;border-radius:15px;box-shadow:0 4px 33px #0be7e534;}
+    .disease-detail-content{flex:1;}
+    .disease-detail-title{font-size:1.63rem;font-family:'Montserrat',sans-serif;color:var(--primary);margin:0;}
+    .disease-attrs{margin:16px 0 0 0;padding:0;}
+    .disease-attrs li{color:var(--muted);margin-bottom:7px;}
+    .back-link{display:inline-block;margin-bottom:14px;color:var(--primary);font-weight:600;text-decoration:none;transition:.14s;}
+    .back-link:hover{text-decoration:underline;opacity:.7;}
+    footer{margin-top:55px;padding:28px 0;text-align:center;background:var(--nav);color:#23b4c8;}
+    @media (max-width:900px) {.hero{flex-direction:column;gap:19px;} .disease-detail-main{flex-direction:column;gap:22px;}.doctor-list{grid-template-columns:1fr;}}
+    @media (max-width:600px) {.diseases-grid{grid-template-columns:1fr;}.section{margin-top:26px;}}
+  </style>
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.2.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.2.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <span class="logo">
+      <span class="logo-icon"><ion-icon name="medkit-outline"></ion-icon></span> MedLookup
+    </span>
+    <nav class="menu">
+      <a href="#" class="active" data-page="home">Trang chủ</a>
+      <a href="#" data-page="benh">Bệnh</a>
+      <a href="#" data-page="bacsi">Bác sĩ</a>
+      <a href="#" data-page="lienhe">Liên hệ</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section id="home">
+    <div class="hero">
+      <div class="hero-content">
+        <h1>Tra cứu bệnh lý & triệu chứng Y tế hiện đại</h1>
+        <p>Giúp bạn dễ dàng nhận biết bệnh, xem hình ảnh trực quan, hiểu nguyên nhân & tìm bác sĩ uy tín.</p>
+        <form class="search-box" onsubmit="return false">
+          <i><ion-icon name="search-outline"></ion-icon></i>
+          <input id="searchInput" placeholder="Tìm triệu chứng hoặc tên bệnh...">
+          <button type="submit" onclick="searchDisease();return false;">Tìm kiếm</button>
+        </form>
+        <div class="guide">VD: cúm, sởi, dị ứng, sốt xuất huyết, viêm họng...</div>
+      </div>
+      <div class="hero-img"><img src="https://cdn.pixabay.com/photo/2017/04/04/17/15/doctor-2207623_960_720.jpg" alt=""></div>
+    </div>
+    <div class="section">
+      <div class="section-title">Một số bệnh phổ biến</div>
+      <div class="diseases-grid" id="diseaseGrid"></div>
+    </div>
+  </section>
+  <section id="benh" hidden>
+    <div class="section-title" style="text-align:center;">Tra cứu bệnh theo hình ảnh & triệu chứng</div>
+    <div class="diseases-grid" id="benhGrid"></div>
+  </section>
+  <section id="bacsi" hidden>
+    <div class="section-title" style="text-align:center;">Bác sĩ nổi bật</div>
+    <div class="doctor-list" id="doctorGrid"></div>
+  </section>
+  <section id="lienhe" hidden>
+    <div class="section-title" style="text-align:center;">Liên hệ / Hỗ trợ</div>
+    <form class="disease-detail-card">
+      <label><b>Họ và tên</b><br><input type="text" required placeholder="Nhập họ tên"></label><br>
+      <label><b>Email</b><br><input type="email" required placeholder="Email"></label><br>
+      <label><b>Nội dung hỗ trợ</b><br><textarea rows="4" required placeholder="Bạn muốn được tư vấn hoặc góp ý gì?"></textarea></label><br>
+      <button type="submit">Gửi liên hệ</button>
+    </form>
+  </section>
+  <!-- Trang chi tiết bệnh -->
+  <section id="disease-detail" hidden>
+    <div class="disease-detail-card" id="detailCard"></div>
+  </section>
+</main>
+<footer>
+  © 2025 MedLookup — Hệ thống y tế số hiện đại.
+</footer>
+<script>
+const diseasesData = [
+  {
+    name:"Cảm cúm",
+    img:"https://tse4.mm.bing.net/th/id/OIP.Ir9qAnN0VtKDbSbwuU5ykQHaE8?pid=Api&P=0&h=180",
+    images:["https://cdn.medonline.vn/medonline/health/thumbs/520x350/2021/12/02/c4beef6030a8b4a4bdebebf55def2936-1622709638.jpg","https://cdn.tgdd.vn/Files/2020/04/03/1247615/cum-ava.jpg"],
+    desc:"Cảm cúm do virus thường gặp khi trời lạnh hoặc giao mùa.",
+    details:[
+      "Triệu chứng: sốt nhẹ, đau đầu, ho, sổ mũi, mệt, đau họng.",
+      "Lây qua tiếp xúc, giọt bắn đường hô hấp.",
+      "Nên nghỉ ngơi, uống nhiều nước, dùng thuốc theo chỉ định bác sĩ."
+    ]
+  },
+  {
+    name:"Sốt xuất huyết",
+    img:"https://tse2.mm.bing.net/th/id/OIP.45tgTq7Ixo1pRyYrF2IKFgHaEK?pid=Api&P=0&h=180",
+    images:["https://cdn.hellobacsi.com/wp-content/uploads/2021/08/sot-xuat-huyet-1300x866.jpg","https://vinmec-prod.s3.amazonaws.com/images/20210607_115845_542681_sot-xuat-huyet.max-800x800.jpg"],
+    desc:"Bệnh truyền nhiễm nguy hiểm do muỗi vằn.",
+    details:[
+      "Triệu chứng: sốt cao, phát ban, đau nhức toàn thân, chảy máu cam.",
+      "Cảnh giác dấu hiệu xuất huyết, sốc.",
+      "Luôn diệt muỗi, giữ vệ sinh nơi ở."
+    ]
+  },
+  {
+    name:"Viêm họng",
+    img:"https://tse4.mm.bing.net/th/id/OIP.q9Q3w1chz9PZSCsxuda5PwHaE8?pid=Api&P=0&h=180",
+    images:["https://medlatec.vn/media/24781/file/2022/12/26/viem-hong-26_121326591.jpg"],
+    desc:"Viêm họng gây đau rát, khàn giọng, khó nuốt.",
+    details:[
+      "Nguyên nhân: vi khuẩn, virus, dị ứng môi trường.",
+      "Nên uống nước ấm, súc miệng nước muối.",
+      "Nếu sốt cao, khó thở cần đi khám."
+    ]
+  },
+  {
+    name:"Đậu mùa",
+    img:"https://cdn.britannica.com/97/215497-050-EA99BF59/Smallpox-lesions-back-February-22-1976.jpg",
+    images:["https://benhvienbaihochinhhanh.com/wp-content/uploads/2022/12/dau-mua.jpg"],
+    desc:"Bệnh truyền nhiễm nguy hiểm, nổi ban toàn cơ thể.",
+    details:[
+      "Triệu chứng: sốt, đau nhức, xuất hiện các mụn nước/bọng nước.",
+      "Hiện đã có vaccine phòng bệnh."
+    ]
+  },
+  {
+    name:"COVID-19",
+    img:"https://tse2.mm.bing.net/th/id/OIP.g6FHHaQ3FKyD6g0VVeGQiwHaDX?pid=Api&P=0&h=180",
+    images:["https://cdn.tgdd.vn/Files/2021/07/30/1368821/covid.jpg"],
+    desc:"Bệnh truyền nhiễm do virus SARS-CoV-2.",
+    details:[
+      "Triệu chứng: sốt, ho, khó thở, mất vị giác/khứu giác.",
+      "Tuân thủ cách ly, đeo khẩu trang phòng dịch.",
+      "Tiêm phòng vaccine giúp hạn chế nguy cơ nặng."
+    ]
+  }
+];
+const doctorData = [
+  {img:"https://cdn.kienthuc.net.vn/images/1832dc71fc983c4dff413425ffe92a43ef6366dbf44a6bb93b4c7bb5348f9c7897036c66f2a11d509f694ab57fb09444c2fbaa0242cf184c60b60105601ab07d701f4e61dea3c69ce5d4985ae1e2631c2b5caa5086be09800fd98b135d93456e/nhung-bac-si-phau-thuat-viet-nam-noi-tieng-the-gioi.jpg",name:"PGS.TS Trần Ngọc Lương",meta:"Chuyên gia phẫu thuật, Bệnh viện Xanh Pôn",phone:"0345366715",zalo:"0345366715",email:"bsngocluong@hospital.com"},
+  {img:"https://cdnv2.tgdd.vn/mwg-static/ankhang/Medicine/Kiem-duyet-vien-nguyen-phuoc-loc.jpg",name:"BS CKI Nguyễn Phước Lộc",meta:"Khám tổng quát, TP.HCM",phone:"0385267834",zalo:"0385267834",email:"bsphuocloc@hospital.com"}
+];
+
+// SPA navigation
+document.querySelectorAll('.menu a').forEach(link=>{
+  link.onclick = function(){
+    document.querySelectorAll('.menu a').forEach(l=>l.classList.remove('active'));
+    this.classList.add('active');
+    let page = this.dataset.page || 'home';
+    document.querySelectorAll('main > section').forEach(s=>s.hidden=true);
+    document.getElementById(page).hidden = false;
+    if(page==='home') renderDiseases();
+    if(page==='benh') renderBenhGrid();
+    if(page==='bacsi') renderDoctors();
+    window.scrollTo(0,0);
+    return false;
+  }
+});
+
+// Trang chủ: grid bệnh nhỏ (4), vào trang bệnh xem tất cả
+function renderDiseases() {
+  let grid = document.getElementById('diseaseGrid'); grid.innerHTML='';
+  diseasesData.slice(0,4).forEach((d,idx)=>{
+    let card=document.createElement('div');
+    card.className='disease-card';
+    card.innerHTML=`<img src="${d.img}" alt="${d.name}">
+      <div class="disease-info"><h3>${d.name}</h3>
+      <div class="meta">${d.desc}</div>
+      <button class="view-detail-btn" onclick="showDetail('${idx}');event.stopPropagation();">Xem chi tiết</button></div>`;
+    grid.appendChild(card);
+  });
+}
+renderDiseases();
+
+// Trang tra cứu bệnh — card lớn + hình phụ
+function renderBenhGrid(filter='') {
+  let grid=document.getElementById('benhGrid'); grid.innerHTML='';
+  diseasesData.forEach((d,idx)=>{
+    if(filter===''||d.name.toLowerCase().includes(filter)||d.desc.toLowerCase().includes(filter)){
+      let card=document.createElement('div');
+      card.className='disease-card'; // dùng chung class cho đẹp
+      let imgs = d.images && d.images.length ? `<div class="card-images">${d.images.slice(0,3).map(i=>`<img src="${i}" alt="">`).join('')}</div>` : '';
+      card.innerHTML=`
+        <img src="${d.img}" alt="${d.name}">
+        ${imgs}
+        <div class="disease-info"><h3>${d.name}</h3>
+        <div class="meta">${d.desc}</div>
+        <button class="view-detail-btn" onclick="showDetail('${idx}');event.stopPropagation();">Xem chi tiết</button></div>`;
+      grid.appendChild(card);
+    }
+  });
+}
+window.renderBenhGrid = renderBenhGrid;
+renderBenhGrid();
+
+// Trang bác sĩ: grid đẹp
+function renderDoctors() {
+  let grid=document.getElementById('doctorGrid'); grid.innerHTML='';
+  doctorData.forEach(doc=>{
+    let div=document.createElement('div');
+    div.className='doctor-card';
+    div.innerHTML=`
+      <img src="${doc.img}" alt="Bác sĩ">
+      <div class="doctor-info">
+        <strong>${doc.name}</strong>
+        <div class="meta">${doc.meta}</div>
+        <div class="contact-buttons">
+          <a href="tel:${doc.phone}" class="call">Gọi</a>
+          <a href="https://zalo.me/${doc.zalo}" class="zalo" target="_blank">Zalo</a>
+          <a href="mailto:${doc.email}" class="mail">Mail</a>
+        </div>
+      </div>
+    `;
+    grid.appendChild(div);
+  })
+}
+renderDoctors();
+
+// Chi tiết bệnh — web phụ, hình lớn, attr, details, nút quay lại
+function showDetail(idx){
+  let d = diseasesData[idx];
+  document.querySelectorAll('main > section').forEach(s=>s.hidden=true);
+  let wrap = document.getElementById('detailCard');
+  let otherImgs = d.images && d.images.length ? d.images.slice(0,3).map(i=>`<img src="${i}" alt="">`).join('') : '';
+  wrap.innerHTML = `
+    <a class="back-link" href="#" onclick="backFromDetail();return false;">← Trở về</a>
+    <div class="disease-detail-main">
+      <div class="disease-main-img"><img src="${d.img}" alt="${d.name}"></div>
+      <div class="disease-detail-content">
+        <h2 class="disease-detail-title">${d.name}</h2>
+        <ul class="disease-attrs">${d.details.map(t=>`<li>${t}</li>`).join('')}</ul>
+        ${otherImgs?'<div style="margin-top:21px;">'+otherImgs+'</div>':''}
+      </div>
+    </div>
+  `;
+  document.getElementById('disease-detail').hidden=false;
+}
+window.showDetail = showDetail;
+window.backFromDetail = function(){
+  document.getElementById('disease-detail').hidden = true;
+  document.querySelectorAll('main > section').forEach((s,idx) => {
+    // quay về từ trang chủ hay tra cứu bệnh
+    if(idx===0 || !document.getElementById('benh').hidden) s.hidden=false; // nếu đang tab "bệnh" thì về bệnh, còn lại về home
+    else s.hidden=true;
+  });
+  window.scrollTo(0,0);
+}
+
+// Tìm kiếm chủ động từ trang chủ
+window.searchDisease = function(){
+  const filter = (document.getElementById('searchInput').value||'').trim().toLowerCase();
+  // renderBenhGrid(filter);
+  document.querySelectorAll('.menu a').forEach(l=>l.classList.remove('active'));
+  document.querySelector('.menu a[data-page="benh"]').classList.add('active');
+  document.querySelectorAll('main > section').forEach(s=>s.hidden=true);
+  document.getElementById('benh').hidden=false;
+  renderBenhGrid(filter);
+}
+</script>
+</body>
+</html>
