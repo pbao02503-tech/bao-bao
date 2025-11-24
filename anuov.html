@@ -1,158 +1,312 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nhà hàng tiểu bao bao</title>
-
-</head><style>
-body
-    {
-     background-color: rgb(172, 242, 228) 
-}
-h1
-    {
-        color:rgb(55, 11, 11);
-        text-align: center;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nhà hàng Tiểu Bao Bao</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,600|Inter:500,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary: #8d2424;
+      --secondary: #fae3c6;
+      --bg: #f6faf9;
+      --radius: 20px;
+      --shadow: 0 4px 26px #e3d6c633;
     }
-P{
-    front-family: verdana;
-    font-size:20px;
-}
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-header {
-  background-color: #4e2121;
-  padding: 30px;
-  text-align: center;
-  font-size: 35px;
-  color: rgb(255, 255, 255);
-}
-nav {
-  float: left;
-  width: 30%;
-  height: 300px; 
-  background: #cab9b9;
-  padding: 20px;
-}
-nav ul {
-  list-style-type: none;
-  padding: 4;
-}
-
-article {
-  float: left;
-  padding: 20px;
-  width: 70%;
-  background-color: #f1f1f1;
-  height: 300px;
-}
-section::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-footer {
-  background-color: #777;
-  padding: 10px;
-  text-align: center;
-  color: white;
-}
-  nav, article {
-    width: 100%;
-    height: auto;
-  }
-</style></head>
+    body {margin:0;font-family:'Inter',Arial,sans-serif;background:var(--bg);color:#371d13;}
+    header {background:linear-gradient(90deg,#8d2424 65%,#f9c173 150%);color:#fff;box-shadow:0 3px 21px #c1966439;position:sticky;top:0;z-index:10;transition:box-shadow .18s;}
+    header.sticky {box-shadow:0 4px 18px #b68a532a;}
+    .nav-container {
+      max-width:1120px;margin:auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;min-height:68px;
+    }
+    .logo {
+      font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:700;letter-spacing:1px;display:flex;align-items:center;gap:8px;
+    }
+    .logo img {height:38px;width:auto;}
+    .nav-menu {display:flex;gap:22px;}
+    .nav-menu a {color:#fff;font-weight:600;text-decoration:none;padding:8px 15px;border-radius:9px;transition:background .17s, box-shadow .15s;display:flex;align-items:center;gap:6px;}
+    .nav-menu a.active,
+    .nav-menu a:hover {background:linear-gradient(90deg,#fae3c6,#fff2c7);color:#8d2424;box-shadow:0 4px 14px #bf6e3c2a;}
+    main {max-width:1120px;margin:38px auto 24px;padding:0 16px;}
+    section[hidden]{display:none;}
+    .hero, .page-card {background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);}
+    .hero {display:flex;gap:35px;align-items:center;justify-content:center;flex-wrap:wrap;padding:36px 16px 36px 18px;}
+    .hero-image {flex:0 0 410px;max-width:410px;}
+    .hero-image img {width:100%;border-radius:15px;box-shadow:0 2px 20px #fff2c7e2;}
+    .hero-content {flex:1;max-width:520px;}
+    .hero-content h1 {font-family:'Montserrat',sans-serif;font-size:2.05rem;margin:0 0 10px 0;color:var(--primary);}
+    .hero-content p {font-size:1.13rem;line-height:1.61;}
+    .hero-btn {
+      display:inline-block;background:var(--primary);color:#fff;font-weight:700;font-family:'Montserrat',sans-serif;
+      padding:11px 26px;border-radius:12px;border:none;font-size:1.1rem;margin-top:26px;text-decoration:none;transition:.13s;
+      box-shadow:0 2px 9px #fadb7a94;transition:transform .14s, box-shadow .15s;
+    }
+    .hero-btn:hover {background:#5d1717;transform:scale(1.07);}
+    .menu-section {margin:40px auto 26px;max-width:1120px;padding:26px 11px 32px 11px;}
+    .menu-title {font-family:'Montserrat',sans-serif;color:var(--primary);font-size:1.6rem;margin-bottom:39px;text-align:center;}
+    .menu-list {display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:30px 23px;justify-content:center;}
+    .dish-card {background:var(--secondary);border-radius:14px;box-shadow:0 2px 19px #bfa1792e;padding:12px 11px 19px 11px;display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:.18s;}
+    .dish-card:hover {box-shadow:0 12px 38px #a5690750;transform:scale(1.04) translateY(-6px);}
+    .dish-img {width:96%;max-width:220px;max-height:138px;border-radius:10px;margin-top:8px;margin-bottom:15px;object-fit:cover;box-shadow:0 2px 9px #fdebc2eb;}
+    .dish-name {font-family:'Montserrat',sans-serif;font-size:1.07rem;font-weight:700;color:var(--primary);margin-bottom:8px;}
+    .dish-desc {color:#612513;font-size:.98rem;margin-bottom:8px;text-align:center;}
+    .dish-price {color:#b76418;font-size:1.08rem;font-weight:600;margin-top:auto;margin-bottom:0;}
+    .page-card {margin:32px auto;padding:30px 24px;max-width:650px;}
+    .page-card h2 {color:var(--primary);font-family:'Montserrat',sans-serif;margin-top:0;}
+    .booking-form label, .contact-form label {font-weight:600;color:#542d2c;display:block;margin-bottom:4px;}
+    .booking-form input, .booking-form select, .contact-form input, .contact-form textarea {
+      width:100%;padding:8px 10px;margin-bottom:13px;border-radius:8px;border:1px solid #e3d1b7;font-size:1rem;
+      transition:border-color .15s, box-shadow .18s;
+    }
+    input:focus, textarea:focus {outline:2px solid #fae3c6;border-color:#b54c21;}
+    .booking-form input[type="submit"], .contact-form button {background:var(--primary);color:#fff;border:none;border-radius:9px;font-family:'Montserrat',sans-serif;font-weight:700;transition:background .17s;cursor:pointer;padding:10px 22px;}
+    .booking-form input[type="submit"]:hover, .contact-form button:hover {background:#a03232;}
+    .booking-form input[type="submit"]:active, .contact-form button:active {transform:scale(.97);}
+    .about-content, .contact-content {font-size:1.13rem;line-height:1.7;}
+    .about-content strong {color:var(--primary);}
+    footer {background:var(--primary);color:#fff;text-align:center;padding:16px 0;font-size:1rem;letter-spacing:.2px;}
+    /* Modal */
+    #modalDish[hidden]{opacity:0;pointer-events:none;transition:opacity .14s;}
+    #modalDish {opacity:1;transition:opacity .18s;}
+    .modal-content {background:#fff;border-radius:21px;box-shadow:0 8px 42px #bfa17967;max-width:390px;padding:27px 14px 22px 14px;position:relative;animation:popIn .22s cubic-bezier(.2,.8,.4,1);}
+    .modal-content img {width:95%;border-radius:11px;box-shadow:0 1px 8px #fbf3d2;margin-bottom:15px;}
+    .modal-content h3 {font-family:'Montserrat',sans-serif;color:var(--primary);margin-top:0;}
+    .modal-content p {color:#612513;}
+    .close-modal {position:absolute;top:12px;right:22px;font-size:1.5rem;color:#b31212;background:none;border:none;cursor:pointer;}
+    @keyframes popIn {from{transform:scale(.8);opacity:0;}to{transform:scale(1);opacity:1;}}
+    @media(max-width:900px){
+      .hero {flex-direction:column;padding:19px 4px;}
+    }
+    @media(max-width:600px){
+      .menu-list{grid-template-columns:1fr;}
+      .nav-container{flex-direction:column;align-items:flex-start;padding:0 7px;}
+      .menu-title{font-size:1.13rem;}
+    }
+    #modalLogin[hidden]{opacity:0;pointer-events:none;transition:opacity .14s;}
+#modalLogin {opacity:1;transition:opacity .18s;position:fixed;inset:0;z-index:101;display:flex;align-items:center;justify-content:center;background:rgba(30,17,10,0.16);}
+#loginForm input[type="text"],#loginForm input[type="password"]{font-size:1rem;padding:8px 10px;border-radius:7px;border:1px solid #e7d4bc;margin-bottom:12px;}
+#loginForm button {background:#8d2424;color:#fff;border:none;border-radius:9px;font-family:'Montserrat',sans-serif;font-weight:700;padding:10px 0;transition:background .14s;}
+#loginForm button:hover {background:#a03232;}
+#loginMsg {min-height:20px;}
+  </style>
+</head>
 <body>
-    
-    <h1>                   NHÀ HÀNG BAO BAO       </h1>
-    <hr></hr> 
-    <hr></hr>
-    <img src="https://cdn0212.cdn4s.com/media/nha-hang-phong-cach-indochine-2.jpg" height="800" width="1300" >
-     <form action="/action_page.php"> <legend for="fname">nhập tên của bạn : </legend><br>
-        <input tuype="text" id="fname"name="fname"><br><br>
-        <p>chọn số lượng</p>          
-           <form action="/action_page.php">
-              <label for="quantity"> số lượng :</label>
-                 <input type="number" id="quantity" name="quantity" min="1" max="10">
-                 <input type="submit" value=" gửi">
-        
-    <h2> nhà hàng bao bao xin kính chào quý khách  </h2>
-         <p> nhà hàng hôm nay xin được phục vụ quý<br>quý khách cần phục vụ có thể ra quầy  </p>
-         <hr></hr>
-       
-    <h3> <menu>hôm nay bao gồm có </menu></h3>
-      
-        <oi><li>phở bò</li>
-          <form> <input type="radio" id="phở"name="fav-lenguage"value="phở">
-            <label for="phở"></label>
-                <object data="https://cdn.tgdd.vn/2020/11/CookProduct/pho-bo-thumbnail-1200x676.jpg" height="300" width="350"></object></oi>
-       <oi> 
-        <li>- tôm hùng </li>
-        <form><input type="radio" id=" tôm hùng"name="fav-lenguage"value="tôm hùng"
-          <label for="tôm hùng"></label>
-                 <object data="https://cdn.tgdd.vn/Files/2021/12/27/1407261/tong-hop-7-mon-tom-hum-nuong-sieu-hap-dan-an-la-ghien-202112272120524930.jpg"height="300" width="350"></object>
-        </oi></form>
-       
-        <oi> <li> món á </li>
-       <form><input type="radio" id="món á"name="fav-lenguage"value="món á"
-          <label for="món á"></label>
-                <object data="https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2022/12/27/mon-16-16720440633021401553814-1672128656467-16721286566892039014373.jpg" height="300" width="350"></object></form>
-        <oi> 
-          
-             <p> quý khách vui lòng chọn món tại đây </p>
-
-        <form action="/action_page.php">
-          <label for=""></label>
-           <select id="eating" name="chọn loại nước ">
-           <option value="vang trắng">vang trắng</option>
-            <option value="nước khoáng">nước khoáng</option>
-            <option value=" nước trái cây">nước trái cây</option>
-            <option value=" nước ngọt"> nước ngọt </option>
-           </select>
-           <input type="submit">
-
-</form>
-header>
-  <h2>món ăn đơn giản có thể tham khảo chút  </h2>
-</header>
-
-<section>
-  <nav>
-    <ul>
-      <li><a href="#">phở </a></li>
-    </ul>
-  </nav>
-  
-  <article>
-    <h1>phở </h1>
-    <p>Phở Hà Nội là món ăn trứ danh với nước dùng trong, ngọt thanh từ xương bò/gà ninh, bánh phở mềm dai, thịt bò/gà mềm tươi, và các loại rau thơm<br> Món này nổi tiếng với sự tinh tế trong cách chế biến, tạo nên hương vị đậm đà, đặc trưng của Hà thành, và là biểu tượng ẩm thực Việt Nam trên thế giới. </p>
-    <p>Phở và Di sản Văn hóa<br>
-Phở không chỉ là một món ăn ngon mà còn là một phần không thể thiếu trong tâm thức người Hà Nội và đã trở thành một biểu tượng của ẩm thực Việt Nam, thu hút cả du khách quốc tế. </p>
-  </article>
-</section>
-
-<footer>
-  <p>tham khảo thêm </p>
-</footer>
- <section>
-  <nav>
-    <ul>
-      <li><a href="#">bánh mì </a></li>
-    </ul>
-  </nav>
-  <article> 
-    <h2>bánh mì </h2>
-    <p>Bánh mì là một loại baguette của Việt Nam với lớp vỏ ngoài giòn tan, ruột mềm, còn bên trong là phần nhân. Tùy theo văn hóa vùng miền hoặc sở thích cá nhân mà người ta có thể lựa chọn nhiều loại đồ ăn kèm khác nhau<br> ngoài ra tên gọi của bánh cũng phụ thuộc phần lớn vào những biến tấu ấy. </p>
-    <p> Do có giá thành phù hợp nên bánh đã trở thành món ăn rất được nhiều người ưa chuộng.</p>
-    <p> </p>
-  </article>
-  <footer> tiếp theo </footer>
-  
+  <header>
+    <div class="nav-container">
+      <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/2776/2776067.png" alt="Logo Tiểu Bao Bao"/>
+        <span>Tiểu Bao Bao</span>
+      </div>
+      <nav class="nav-menu">
+        <a href="#" data-page="home" class="active"><i class="fa fa-home"></i>Trang chủ</a>
+        <a href="#" data-page="menu"><i class="fa fa-utensils"></i>Thực đơn</a>
+        <a href="#" data-page="booking"><i class="fa fa-calendar-plus"></i>Đặt bàn</a>
+        <a href="#" data-page="about"><i class="fa fa-users"></i>Giới thiệu</a>
+        <a href="#" data-page="contact"><i class="fa fa-envelope"></i>Liên hệ</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <!-- Trang chủ -->
+    <section id="home">
+      <div class="hero">
+        <div class="hero-image">
+          <img src="https://cdn0212.cdn4s.com/media/nha-hang-phong-cach-indochine-2.jpg" alt="Không gian Nhà hàng">
+        </div>
+        <div class="hero-content">
+          <h1>Chào mừng đến với Tiểu Bao Bao</h1>
+          <p>Ẩm thực truyền thống tinh hoa, trải nghiệm phục vụ chuyên nghiệp, phong cách không gian đậm chất Á Đông.<br>
+          Đặt bàn hoặc khám phá thực đơn đặc sắc ngay!</p>
+          <a class="hero-btn" href="#" onclick="showPage('menu');return false;">Xem thực đơn</a>
+        </div>
+      </div>
+    </section>
+    <!-- Modal Đăng nhập -->
+<div id="modalLogin" hidden>
+  <div class="modal-content" style="max-width:360px;">
+    <button class="close-modal" onclick="closeModalLogin()">&times;</button>
+    <h3 style="margin-bottom:12px;color:#8d2424;text-align:center">Đăng nhập quản trị</h3>
+    <form id="loginForm">
+      <label for="loginUser">Tên tài khoản</label>
+      <input type="text" id="loginUser" name="loginUser" required placeholder="Nhập tên tài khoản...">
+      <label for="loginPass">Mật khẩu</label>
+      <input type="password" id="loginPass" name="loginPass" required placeholder="Nhập mật khẩu...">
+      <button type="submit" style="margin-top:8px;width:100%;">Đăng nhập</button>
+      <div id="loginMsg" style="margin-top:12px;font-weight:500;text-align:center"></div>
+    </form>
+  </div>
+</div>
+    <!-- Trang thực đơn -->
+    <section id="menu" hidden>
+      <div class="menu-title">Thực đơn nổi bật</div>
+      <div class="menu-list" id="menuGrid"></div>
+    </section>
+    <!-- Trang đặt bàn -->
+    <section id="booking" hidden>
+      <form class="page-card booking-form" id="bookingForm">
+        <h2>Đặt bàn</h2>
+        <label for="fname">Tên khách</label>
+        <input type="text" id="fname" name="fname" required placeholder="Nhập tên của bạn...">
+        <label for="quantity">Số lượng khách</label>
+        <input type="number" id="quantity" name="quantity" min="1" max="20" value="2" required>
+        <label for="drink">Nước uống kèm</label>
+        <select id="drink" name="drink">
+          <option value="vang trắng">Vang trắng</option>
+          <option value="nước khoáng">Nước khoáng</option>
+          <option value="nước trái cây">Nước trái cây</option>
+          <option value="nước ngọt">Nước ngọt</option>
+        </select>
+        <input type="submit" value="Đặt bàn ngay">
+        <div id="bookingMsg" style="margin-top:10px;color:#037a10;font-weight:500;"></div>
+      </form>
+    </section>
+    <!-- Trang giới thiệu -->
+    <section id="about" hidden>
+      <div class="page-card about-content">
+        <h2>Giới thiệu Tiểu Bao Bao</h2>
+        <p><strong>Tiểu Bao Bao</strong> là nhà hàng với hơn 15 năm phục vụ, nổi tiếng với các món Á Đông truyền thống và hải sản cao cấp, thiết kế Indochine hiện đại, không gian ấm cúng và dịch vụ tận tâm.</p>
+        <p>Bếp trưởng giàu kinh nghiệm, nguyên liệu chọn lọc, thực đơn đa dạng – tạo nên trải nghiệm vừa sang trọng vừa thân thiện cho mọi thực khách.</p>
+        <p>Chúng tôi cam kết đảm bảo vệ sinh an toàn thực phẩm và không ngừng sáng tạo để nâng tầm thương hiệu ẩm thực Việt.</p>
+      </div>
+    </section>
+    <!-- Trang liên hệ -->
+    <section id="contact" hidden>
+      <form class="page-card contact-form" onsubmit="event.preventDefault();showContactMsg()" id="contactForm">
+        <h2>Liên hệ & Góp ý</h2>
+        <label for="cname">Tên của bạn</label>
+        <input type="text" id="cname" required>
+        <label for="cmsg">Nội dung liên hệ/góp ý</label>
+        <textarea id="cmsg" rows="4" required placeholder="Nhập phản hồi, góp ý hoặc yêu cầu của bạn..."></textarea>
+        <button type="submit">Gửi liên hệ</button>
+        <div id="contactMsg" style="margin-top:13px;font-weight:500;"></div>
+      </form>
+    </section>
+    <!-- Modal món ăn -->
+    <div id="modalDish" hidden>
+      <div class="modal-content" id="modalContent">
+        <button class="close-modal" onclick="closeModal()">&times;</button>
+      </div>
+    </div>
+  </main>
+  <footer>
+    &copy; 2025 Nhà hàng Tiểu Bao Bao – Tinh hoa ẩm thực Việt. Đặt bàn, tham khảo menu, nhận ưu đãi mỗi ngày tại website!
+  </footer>
+  <script>
+    // Sticky menu hiệu ứng khi scroll
+    window.addEventListener('scroll', function() {
+      if(window.scrollY > 24) document.querySelector('header').classList.add('sticky');
+      else document.querySelector('header').classList.remove('sticky');
+    });
+    // Dữ liệu các món
+    const dishes = [
+      {
+        name: "Phở Bò Hà Nội",
+        img: "https://cdn.tgdd.vn/2020/11/CookProduct/pho-bo-thumbnail-1200x676.jpg",
+        desc: "Nước dùng trong thanh, bánh phở mềm, thịt bò tươi lát mỏng, rau thơm.",
+        price:"59.000đ",
+        detail:"Phở Hà Nội là món ngon truyền thống với vị ngọt tự nhiên từ xương bò, ăn kèm hành tây, rau quế, tương ớt đặc biệt. Được ninh xương nhiều giờ, hương vị phở đằm thắm, chuẩn vị Bắc."
+      },
+      {
+        name: "Tôm Hùm Nướng Bơ Tỏi",
+        img: "https://cdn.tgdd.vn/Files/2021/12/27/1407261/tong-hop-7-mon-tom-hum-nuong-sieu-hap-dan-an-la-ghien-202112272120524930.jpg",
+        desc: "Tôm hùm tươi chọn lọc, nướng bơ tỏi, thịt ngọt đậm đà, sốt bơ béo thơm.",
+        price:"489.000đ",
+        detail:"Tôm hùm ủ hương vị tự nhiên, tẩm ướp vị bơ tỏi mềm ngậy, ăn kèm salad hoặc bánh mì nóng. Một trong những món hải sản được yêu thích nhất."
+      },
+      {
+        name:"Món Á Đặc Sắc",
+        img:"https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2022/12/27/mon-16-16720440633021401553814-1672128656467-16721286566892039014373.jpg",
+        desc:"Dimsum, lẩu, xào, gỏi – đa dạng món hấp dẫn nhất nhà hàng.",
+        price:"Từ 59.000đ",
+        detail:"Bao gồm nhiều món HOT: gỏi cuốn, dimsum, gà xào, bò sốt BBQ, lẩu Thái, mì xào Singapore. Đầu bếp chế biến theo phong cách truyền thống và sáng tạo của châu Á."
+      },
+      {
+        name:"Bánh Mì Đặc Biệt Việt",
+        img:"https://cdn.tgdd.vn/2020/11/CookProduct/banh-mi-thit-nguoi-1200x676.jpg",
+        desc:"Vỏ bánh mì Pháp giòn rụm, nhân pate/thịt nguội/rau tươi, sốt bí truyền.",
+        price:"29.000đ",
+        detail:"Bánh mì Việt Nam nổi tiếng cùng lớp vỏ giòn và nhân đa dạng. Ăn sáng, ăn nhẹ buổi trưa hay mang đi du lịch đều tiện lợi, ngon miệng."
+      }
+    ];
+    // Render thực đơn
+    function renderMenu() {
+      let g = document.getElementById('menuGrid'); g.innerHTML='';
+      dishes.forEach((m,i)=>{
+        let div = document.createElement('div');
+        div.className = 'dish-card';
+        div.innerHTML = `<img class="dish-img" src="${m.img}" alt="${m.name}">
+            <div class="dish-name">${m.name}</div>
+            <div class="dish-desc">${m.desc}</div>
+            <div class="dish-price">${m.price}</div>`;
+        div.onclick = ()=>showModal(i);
+        g.appendChild(div);
+      });
+    }
+    renderMenu();
+    // Modal chi tiết món
+    function showModal(idx) {
+      let m = dishes[idx];
+      let modal = document.getElementById('modalDish');
+      let cont = document.getElementById('modalContent');
+      cont.innerHTML = `
+        <button class="close-modal" onclick="closeModal()">&times;</button>
+        <img src="${m.img}" alt="${m.name}">
+        <h3>${m.name}</h3>
+        <div style="color:#903a1a;font-weight:600;font-size:1.07rem;margin-bottom:8px;">${m.price}</div>
+        <p>${m.detail}</p>
+      `;
+      modal.hidden = false;
+    }
+    function closeModal(){ document.getElementById('modalDish').hidden = true; }
+    // Điều hướng các trang
+    function showPage(page) {
+      document.querySelectorAll('.nav-menu a').forEach(a=>a.classList.remove('active'));
+      let menuLink = [...document.querySelectorAll('.nav-menu a')].find(a => a.dataset.page === page);
+      if(menuLink) menuLink.classList.add('active');
+      document.querySelectorAll('main > section').forEach(s=>s.hidden=true);
+      document.getElementById(page).hidden=false;
+      window.scrollTo(0,0);
+    }
+    document.querySelectorAll('.nav-menu a').forEach(a=>{
+      a.onclick=e=>{
+        e.preventDefault();
+        showPage(a.dataset.page);
+      }
+    });
+    // Form đặt bàn
+    document.getElementById('bookingForm').onsubmit = function(e){
+      e.preventDefault();
+      let name = this.fname.value.trim();
+      if(!name){ this.fname.focus(); return; }
+      document.getElementById('bookingMsg').innerText = '🟢 Đặt bàn thành công! Nhà hàng sẽ liên hệ xác nhận trong 5 phút.';
+      this.reset();
+    };
+    // Form liên hệ
+    function showContactMsg(){
+      document.getElementById('contactMsg').innerText = '🟢 Cảm ơn bạn đã liên hệ góp ý cho nhà hàng!';
+      document.getElementById('contactForm').reset();
+    }
+    // Xử lý hiện modal đăng nhập
+document.querySelector('.nav-menu a[data-page="login"]').onclick = function(e){
+  e.preventDefault();
+  document.getElementById('modalLogin').hidden = false;
+  document.getElementById('loginForm').reset();
+  document.getElementById('loginMsg').innerText = '';
+};
+// Đóng modal login
+function closeModalLogin() { document.getElementById('modalLogin').hidden = true; }
+// Validate đăng nhập mẫu
+document.getElementById('loginForm').onsubmit = function(e){
+  e.preventDefault();
+  let u = this.loginUser.value.trim(), p = this.loginPass.value.trim();
+  if(u === 'admin' && p === '123456'){
+    document.getElementById('loginMsg').innerText = '🟢 Đăng nhập thành công!';
+    setTimeout(()=>{closeModalLogin();},1000);
+  } else {
+    document.getElementById('loginMsg').innerText = '🔴 Sai tài khoản hoặc mật khẩu.';
+  }
+};
+  </script>
 </body>
 </html>
