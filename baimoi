@@ -1,95 +1,317 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bài tập về nhà </title>
-</head><style>
-    .btn-group{
-        display: flex;
-        flex-wrap: wrap;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MedLookup – Tra cứu bệnh lý chuyên nghiệp</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,600|Inter:500,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent:#0585e7;
+      --secondary:#04bac5;
+      --bg:#f5faff;
+      --card:#fff;
+      --radius:20px;
+      --shadow:0 5px 21px #0585e711;
+      --muted:#4572a6;
     }
-.button {
-    background-color:rgb(6, 115, 38) ;
-    border:none;
-    olor: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.btn-group .button:hover {
-  background-color: dodgerblue;
-}
-table{ border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-tr:hover {background-color: rgb(48, 134, 183);}
-p{
-    background-color: aquamarine;
-    padding: 10px;
-}
-
-    .note {
-      width: 120px;
-      height: 120px;
-      background: yellow;
-      border: 2px solid #999;
-      padding: 10px;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    html {scroll-behavior:smooth;}
+    body {font-family:'Inter','Segoe UI',Arial,sans-serif;background:var(--bg);margin:0;color:#16344c;}
+    header {background:linear-gradient(90deg,#0585e7 66%,#04bac5 116%);color:#fff;box-shadow:0 3px 21px #18bdee13;}
+    .nav-bar {max-width:1210px;margin:auto;display:flex;align-items:center;justify-content:space-between;min-height:70px;padding:0 20px;}
+    .brand {font-family:'Montserrat',sans-serif;font-weight:700;font-size:2rem;letter-spacing:1px;display:flex;align-items:center;gap:10px;}
+    .menu {display:flex;gap:32px;}
+    .menu a {color:#ecfcfd;text-decoration:none;font-size:1.11rem;font-weight:600;padding:8px 20px;border-radius:13px;transition:.12s;}
+    .menu a.active,.menu a:hover{background:#fff2;color:var(--secondary);}
+    main {max-width:1210px;margin:54px auto 0;padding:0 16px;}
+    section[hidden]{display:none;}
+    .section-title {font-family:'Montserrat',sans-serif;font-size:1.33rem;font-weight:700;color:var(--accent);margin-bottom:18px;}
+    /* Hero */
+    .hero {background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);display:flex;align-items:center;gap:42px;flex-wrap:wrap;padding:38px 20px;margin-bottom:48px;}
+    .hero-content {flex:1;}
+    .hero-content h1 {font-family:'Montserrat',sans-serif;font-size:2.35rem;color:var(--accent);margin:0 0 12px;}
+    .hero-content p {color:#218bbd;font-size:1.17rem;}
+    .hero-btn {background:linear-gradient(90deg,#04bac5,#0585e7 99%);color:#fff;padding:13px 33px;border-radius:17px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.11rem;transition:.14s;box-shadow:0 2px 8px #086c9b13;cursor:pointer;text-decoration:none;border:none;}
+    .hero-btn:hover{background:linear-gradient(90deg,#0585e7,#04bac5);}
+    .hero-img img{width:320px;max-width:90vw;border-radius:15px;box-shadow:0 7px 37px #0585e724;}
+    /* Bệnh lý - grid */
+    .search-bar{max-width:340px;margin:0 auto 15px auto;display:flex;gap:7px;}
+    .search-bar input{flex:1;padding:9px;border-radius:10px;border:1px solid #d6eaf7;font-size:1.07rem;}
+    .search-bar button{padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-weight:600;}
+    .diseases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;}
+    .disease-card{background:var(--card);border-radius:17px;box-shadow:0 2px 15px #5fc3f21f;padding:14px 14px;display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:.18s;opacity:0;transform:translateY(24px);animation:fadeInUp .69s forwards;}
+    .disease-card:hover{box-shadow:0 12px 42px #0585e728;transform:scale(1.04);}
+    .disease-card img{width:110px;height:110px;border-radius:14px;object-fit:cover;margin-bottom:12px;box-shadow:0 1px 9px #cdebf7;}
+    .disease-name{font-family:'Montserrat',sans-serif;font-size:1.05rem;color:var(--accent);font-weight:700;text-align:center;}
+    .disease-desc{color:#285b63;font-size:.95rem;margin:10px 0;text-align:center;}
+    .view-detail-btn{margin-top:auto;background:var(--accent);color:#fff;padding:7px 18px;border:none;border-radius:11px;font-weight:600;font-size:1rem;}
+    /* Cảnh báo */
+    .alerts-grid{display:grid;grid-template-columns:1fr 1fr;gap:19px;}
+    .alert-card{background:#ebfcfd;border-left:4px solid #04bac5;padding:11px 15px;border-radius:13px;box-shadow:0 1px 7px #bdf7fe22;cursor:pointer;transition:.14s;}
+    .alert-card:hover{box-shadow:0 8px 35px #cfddf7b0;transform:scale(1.04);}
+    .alert-title{font-size:1.09rem;font-weight:700;color:var(--accent);}
+    .alert-desc{font-size:.98rem;color:#086c9b;}
+    /* Bác sĩ */
+    .doctors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;}
+    .doctor-card{background:#fff;border-radius:17px;box-shadow:0 2px 15px #0585e71c;padding:18px 15px;display:flex;align-items:center;gap:12px;transition:.16s;cursor:pointer;opacity:0;transform:translateY(20px);animation:fadeInUp .8s forwards;}
+    .doctor-card:hover{box-shadow:0 10px 37px #0970c11d;transform:scale(1.05);}
+    .doctor-avatar{width:66px;height:66px;object-fit:cover;border-radius:50%;box-shadow:0 1px 6px #dafaf0;}
+    .doctor-info{flex:1;}
+    .doctor-info strong{font-size:1.08rem;font-family:'Montserrat',sans-serif;color:var(--accent);}
+    .doctor-meta{color:#0780c1;font-size:.99rem;}
+    .contact-buttons{display:flex;flex-wrap:wrap;gap:8px;}
+    .contact-buttons a{display:inline-block;padding:7px 12px;border-radius:8px;font-size:13px;text-decoration:none;font-weight:600;color:#fff;}
+    .call{background:#24b347;}
+    .call:hover{background:#167a2f;}
+    .zalo{background:#0585e7;}
+    .zalo:hover{background:#0361ab;}
+    .mail{background:#ff7a45;}
+    .mail:hover{background:#e66a34;}
+    /* Liên hệ */
+    .contact-card{max-width:410px;margin:33px auto;background:#fff;padding:29px 19px;border-radius:19px;box-shadow:var(--shadow);}
+    .contact-card label{font-weight:600;color:#068aea;margin-bottom:4px;display:block;}
+    .contact-card input, .contact-card textarea{width:100%;padding:9px;margin-bottom:11px;border-radius:8px;border:1px solid #d3e1ef;font-size:1.05rem;}
+    .contact-card button{background:var(--accent);color:#fff;padding:9px 20px;border-radius:9px;border:none;font-size:1.04rem;font-weight:600;}
+    .contact-card button:hover{background:#0260b7;}
+    /* Popup modal */
+    #popupOverlay{position:fixed;inset:0;background:rgba(0,0,0,0.18);display:none;align-items:center;justify-content:center;z-index:1001;}
+    .popup{background:#fff;border-radius:20px;max-width:410px;width:96%;padding:28px 19px 25px;box-shadow:0 7px 36px #26bee733;position:relative;animation:zoomIn .21s;}
+    @keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
+    @keyframes zoomIn{0%{transform:scale(.87);}100%{transform:scale(1);}}
+    .popup img{width:100%;border-radius:12px;margin-bottom:12px;object-fit:cover;max-height:220px;}
+    .popup h3{margin:0 0 9px;color:var(--accent);}
+    .popup p{margin:4px 0 9px 0;color:#1f3a63;line-height:1.57;}
+    .close-x{position:absolute;top:9px;right:18px;font-size:22px;color:#ff7a68;background:none;border:none;cursor:pointer;}
+    .close-btn{background:var(--accent);color:#fff;border:none;padding:9px 16px;border-radius:7px;cursor:pointer;margin-top:15px;font-size:1rem;transition:.18s;font-weight:600;font-family:'Montserrat',sans-serif;}
+    .close-btn:hover{background:#0260b7;}
+    /* Responsive */
+    @media(max-width:980px){.hero{flex-direction:column;gap:17px;}.hero-img img{width:95vw;max-width:99vw;}}
+    @media(max-width:900px){main{padding:0 4px;}.diseases-grid,.doctors-grid,.alerts-grid{grid-template-columns:1fr;}}
+    @media(max-width:600px){
+      .hero-content h1{font-size:1.19rem;}
+      .section-title{font-size:1.09rem;}
+      .contact-card{padding:17px 4px;}
+      .brand{font-size:1.2rem;}
+      .row{grid-template-columns:1fr;}
     }
-    .note p { margin: 0; }
-    .note {
-      position: fixed;  
-      top: 50px;
-      right: 30px;
-    }
-</style>
+    footer{margin-top:45px;padding:24px;text-align:center;color:var(--muted);background:#f6fbff;}
+  </style>
+</head>
 <body>
-    <div class=" btn- group">
-       <button class=" button" >trang chủ </button>
-        <button class="button"> bảng điểm </button>
-             <th><button class="button">liên hệ</button>
+  <header>
+    <div class="nav-bar">
+      <div class="brand">MedLookup</div>
+      <nav class="menu" aria-label="site menu">
+        <a href="#" data-page="home" class="active">Trang chủ</a>
+        <a href="#" data-page="diseases">Bệnh lý</a>
+        <a href="#" data-page="doctors">Bác sĩ</a>
+        <a href="#" data-page="alerts">Cảnh báo</a>
+        <a href="#" data-page="contact">Liên hệ</a>
+        <a href="#" id="loginBtn">đăng nhập</a>
+      </nav>
     </div>
-    <table>
-        <tr>
-            <th>tên học sinh </th>
-    <th>môn toán </th>
-    <th>văn học </th>
-  </tr>
-  <tr>
-    <td>nguyễn văn a</td>
-    <td>8</td>
-    <td>9</td>
-  </tr>
-  <tr>
-    <td>trinh văn b</td>
-    <td>9</td>
-    <td>9</td>
-  </tr>
-  <tr>
-    <td>nguyên công c</td>
-    <td>8</td>
-    <td>8</td>
-        </tr>
-    </table>
-<p class="ex1">
-    <span> chào mừng</span>
-    <samp> hoạt động</samp>
-    <samp> cài đặt </samp>
-</p><div class="content">
-    <div class="note">
-      <p><b>ghi chú nhỏ:</b></p>
-      <p>Hãy thay đổi<br>viết tiếp tương lai</p>
+  </header>
+  <main>
+    <!-- Trang chủ -->
+    <section id="home">
+      <div class="hero">
+        <div class="hero-content">
+          <h1>Tra cứu bệnh lý & Kết nối bác sĩ chuyên nghiệp</h1>
+          <p>MedLookup hỗ trợ bạn cập nhật kiến thức y tế mới, khám phá danh mục bệnh phổ biến, chuyên gia uy tín và nhiều thông tin cảnh báo sức khoẻ quan trọng.</p>
+          <a class="hero-btn" href="#" onclick="showPage('diseases');return false;">Bắt đầu tra cứu</a>
+        </div>
+        <div class="hero-img"><img src="https://image.luatvietnam.vn/uploaded/1200x675twebp/images/original/2020/12/24/benh-vien_2808175558_2412092857.jpg" alt="Banner Y tế"></div>
+      </div>
+    </section>
+    <!-- Trang bệnh lý (grid + tìm kiếm + modal) -->
+    <section id="diseases" hidden>
+      <div class="section-title">Danh mục bệnh phổ biến</div>
+      <form class="search-bar" onsubmit="event.preventDefault();filterDiseases();">
+        <input type="text" id="diseaseSearch" placeholder="Nhập tên bệnh hoặc triệu chứng...">
+        <button type="submit">Tìm kiếm</button>
+      </form>
+      <div class="diseases-grid" id="diseaseGrid"></div>
+    </section>
+    <!-- Trang bác sĩ -->
+    <section id="doctors" hidden>
+      <div class="section-title">Danh sách bác sĩ nổi bật</div>
+      <div class="doctors-grid" id="doctorGrid"></div>
+    </section>
+    <!-- Trang cảnh báo -->
+    <section id="alerts" hidden>
+      <div class="section-title">Cảnh báo y tế mới</div>
+      <div class="alerts-grid" id="alertsGrid"></div>
+    </section>
+    <!-- Trang liên hệ -->
+    <section id="contact" hidden>
+      <form class="contact-card" onsubmit="event.preventDefault();document.getElementById('contactMsg').textContent='🟢 Đã gửi thành công!';this.reset()">
+        <h2 style="margin-top:0;color:#0585e7;">Liên hệ - Góp ý</h2>
+        <label for="cname">Tên của bạn</label>
+        <input id="cname" required>
+        <label for="cmsg">Nội dung liên hệ/góp ý</label>
+        <textarea id="cmsg" rows="4" required></textarea>
+        <button type="submit">Gửi liên hệ</button>
+        <div id="contactMsg" style="margin-top:11px;color:#1ca523;font-weight:600;" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+  <footer>
+    bao bao là – Nền tảng tra cứu bệnh lý & kết nối bác sĩ chuyên nghiệp.
+  </footer>
+  <div id="popupOverlay" aria-modal="true" role="dialog">
+    <div class="popup" id="popupCard">
+      <button class="close-x" onclick="closePopup()" aria-label="Đóng chi tiết">&times;</button>
+      <img id="popupImg" src="" alt="Chi tiết">
+      <h3 id="popupTitle"></h3>
+      <p id="popupDesc"></p>
+      <button class="close-btn" onclick="closePopup()">Đóng</button>
     </div>
+  </div>
+<script>
+// Data
+const DISEASES = [
+  {name:"Cảm cúm",desc:"Cảm cúm do virus, triệu chứng: sốt nhẹ, ho, đau đầu, sổ mũi.",img:"https://tse4.mm.bing.net/th/id/OIP.Ir9qAnN0VtKDbSbwuU5ykQHaE8?pid=Api&P=0&h=180",detail:"Xuất hiện nhiều khi thời tiết lạnh hoặc giao mùa. Nên điều trị sớm để tránh biến chứng."},
+  {name:"Sốt xuất huyết",desc:"Sốt cao, phát ban, đau nhức, nguy hiểm nếu không điều trị đúng.",img:"https://tse2.mm.bing.net/th/id/OIP.45tgTq7Ixo1pRyYrF2IKFgHaEK?pid=Api&P=0&h=180",detail:"Do muỗi vằn. Đề phòng dịch bằng cách diệt muỗi, vệ sinh nơi ở."},
+  {name:"Đau đầu",desc:"Có thể do căng thẳng, thiếu ngủ, bệnh lý thần kinh.",img:"https://tse2.mm.bing.net/th/id/OIP.m56yjyP4fHgEh_sZQXEJ0gHaFC?pid=Api&P=0&h=180",detail:"Nên nghỉ ngơi, uống nước hoặc gặp bác sĩ nếu đau kéo dài."},
+  {name:"Viêm họng",desc:"Đau rát, ho, khàn tiếng, khó nuốt. Có thể do virus/vi khuẩn.",img:"https://tse4.mm.bing.net/th/id/OIP.q9Q3w1chz9PZSCsxuda5PwHaE8?pid=Api&P=0&h=180",detail:"Súc miệng nước muối, giữ vệ sinh, tham khảo ý kiến chuyên gia."},
+  {name:"COVID-19",desc:"Sốt, ho, đau họng, mất vị giác/ngửi, mệt, khó thở.",img:"https://tse2.mm.bing.net/th/id/OIP.g6FHHaQ3FKyD6g0VVeGQiwHaDX?pid=Api&P=0&h=180",detail:"Tuân thủ hướng dẫn phòng dịch, tiêm vaccine đầy đủ."}
+];
+const DOCTORS = [
+  {name:"PGS.TS Trần Ngọc Lương",meta:"Chuyên gia ngoại tiết niệu — Hà Nội",img:"https://cdn.kienthuc.net.vn/images/1832dc71fc983c4dff413425ffe92a43ef6366dbf44a6bb93b4c7bb5348f9c7897036c66f2a11d509f694ab57fb09444c2fbaa0242cf184c60b60105601ab07d701f4e61dea3c69ce5d4985ae1e2631c2b5caa5086be09800fd98b135d93456e/nhung-bac-si-phau-thuat-viet-nam-noi-tieng-the-gioi.jpg",tel:"0345366715",zalo:"0345366715",mail:"bs.nguyenvana@example.com",detail:"PGS.TS, Giám đốc BV Xanh Pôn, nhiều năm kinh nghiệm trong phẫu thuật tiết niệu."},
+  {name:"BS CKI Nguyễn Phước Lộc",meta:"Khám tổng quát — Hà Nội",img:"https://cdnv2.tgdd.vn/mwg-static/ankhang/Medicine/Kiem-duyet-vien-nguyen-phuoc-loc.jpg",tel:"0345366715",zalo:"0345366715",mail:"bs.nguyenvana@example.com",detail:"BS chuyên khoa, nội tổng quát, được bệnh nhân tin tưởng lâu năm ở TP.HCM."}
+];
+const ALERTS = [
+  {title:"Sốt xuất huyết tăng mạnh",desc:"Bộ Y tế khuyến cáo chủ động phòng muỗi, phát hiện sớm dấu hiệu sốt cao.",detail:"Dịch sốt xuất huyết đang lan rộng ở miền Nam. Nếu có dấu hiệu sốt cao nhiều ngày, nên đi khám ngay."},
+  {title:"Cúm mùa đang lưu hành",desc:"Tiêm vaccine phòng cúm cho cả gia đình giúp phòng bệnh hiệu quả.",detail:"Rửa tay thường xuyên, đeo khẩu trang tại nơi đông người giúp ngăn cúm mùa."}
+];
+
+// SPA navigation
+document.querySelectorAll('.menu a').forEach(a=>{
+  a.onclick=e=>{
+    e.preventDefault();
+    document.querySelectorAll('.menu a').forEach(el=>el.classList.remove('active'));
+    a.classList.add('active');
+    let page=a.dataset.page;
+    document.querySelectorAll('main section').forEach(s=>s.hidden=true);
+    document.getElementById(page).hidden=false;
+    window.scrollTo(0,0);
+    if(page==="diseases") {renderDiseases();}
+    if(page==="doctors") {renderDoctors();}
+    if(page==="alerts") {renderAlerts();}
+  }
+});
+// Bệnh lý
+function renderDiseases(filter=''){
+  let g=document.getElementById('diseaseGrid');g.innerHTML='';
+  DISEASES.forEach((d,idx)=>{
+    if(!filter||d.name.toLowerCase().includes(filter)||d.desc.toLowerCase().includes(filter)){
+      let div=document.createElement('div');
+      div.className='disease-card';div.style.animationDelay=(idx*0.09)+'s';
+      div.innerHTML=`<img src="${d.img}" alt="${d.name}"><div class="disease-name">${d.name}</div><div class="disease-desc">${d.desc}</div>
+      <button class="view-detail-btn" onclick="showModal(DISEASES[${idx}],false);event.stopPropagation()">Chi tiết</button>`;
+      div.onclick = () => showModal(d,false);
+      g.appendChild(div);
+    }
+  });
+}
+function filterDiseases(){
+  let val=document.getElementById('diseaseSearch').value.trim().toLowerCase();
+  renderDiseases(val);
+}
+// Bác sĩ
+function renderDoctors(){
+  let g=document.getElementById('doctorGrid');g.innerHTML='';
+  DOCTORS.forEach((d,idx)=>{
+    let div=document.createElement('div');
+    div.className='doctor-card';div.style.animationDelay=(idx*0.12)+'s';
+    div.innerHTML=`
+      <img class="doctor-avatar" src="${d.img}" alt="${d.name}">
+      <div class="doctor-info">
+        <strong>${d.name}</strong>
+        <div class="doctor-meta">${d.meta}</div>
+        <div class="contact-buttons">
+          <a href="tel:${d.tel}" class="call">Gọi điện</a>
+          <a href="https://zalo.me/${d.zalo}" class="zalo" target="_blank">Zalo</a>
+          <a href="mailto:${d.mail}" class="mail">Email</a>
+        </div>
+      </div>
+      <button class="view-detail-btn" onclick="showModal(DOCTORS[${idx}],true);event.stopPropagation()">Chi tiết</button>
+    `;
+    div.onclick = () => showModal(d,true);
+    g.appendChild(div);
+  });
+}
+// Cảnh báo
+function renderAlerts(){
+  let g=document.getElementById('alertsGrid');g.innerHTML='';
+  ALERTS.forEach((a,idx)=>{
+    let div=document.createElement('div');
+    div.className='alert-card';
+    div.innerHTML=`<div class="alert-title">${a.title}</div><div class="alert-desc">${a.desc}</div>`;
+    div.onclick = () => showModal(a,"alert");
+    g.appendChild(div);
+  });
+}
+// Modal popup
+function showModal(data,type){
+  document.getElementById('popupImg').src = data.img||"https://cdn-icons-png.flaticon.com/512/2830/2830308.png";
+  document.getElementById('popupTitle').textContent = data.name||data.title||"Thông tin";
+  document.getElementById('popupDesc').textContent = type==="alert"?data.detail:(data.detail||(data.desc)||"");
+  document.getElementById('popupOverlay').style.display='flex';
+}
+  // Bổ sung bên dưới các hàm đã có
+document.getElementById('loginBtn').onclick = function(e){
+  e.preventDefault();
+  document.getElementById('loginModal').style.display = 'flex';
+}
+function closeLogin(){
+  document.getElementById('loginModal').style.display = 'none';
+  document.getElementById('loginMsg').textContent = '';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+function doLogin(e){
+  e.preventDefault();
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+  // Demo: tài khoản "admin", mật khẩu "123456"
+  if(user==="admin" && pass==="123456"){
+    document.getElementById('loginMsg').style.color = "#24b347";
+    document.getElementById('loginMsg').textContent = "Đăng nhập thành công!";
+    setTimeout(()=>{
+      closeLogin();
+      alert("Xin chào, bạn đã đăng nhập thành công!");
+    },700);
+  } else {
+    document.getElementById('loginMsg').style.color = "#ff1111";
+    document.getElementById('loginMsg').textContent = "Sai tài khoản hoặc mật khẩu";
+  }
+}
+function closePopup(){document.getElementById('popupOverlay').style.display='none';}
+</script>
+<div id="loginModal" style="display:none;position:fixed;inset:0;z-index:1002;background:rgba(0,0,0,0.17);align-items:center;justify-content:center;">// đăng nhậ
+  <div style="background:#fff;border-radius:17px;max-width:350px;width:97%;padding:30px 20px;box-shadow:0 7px 36px #0585e733;position:relative;">
+    <button onclick="closeLogin()" style="position:absolute;top:10px;right:14px;font-size:20px;color:#0585e7;background:none;border:none;cursor:pointer;">&times;</button>
+    <h2 style="margin:0 0 17px 0;font-size:1.3rem;font-family:'Montserrat',sans-serif;color:#0585e7;">Đăng nhập</h2>
+    <form onsubmit="doLogin(event)">
+      <label style="font-weight:600;color:#068aea;">Tài khoản</label>
+      <input id="loginUser" required style="width:100%;padding:8px 6px;margin-bottom:10px;border-radius:7px;border:1px solid #d3e1ef;">!trang đang nhập <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+      </head>
+      <body>
+        
+      </body>
+      </html>
+      <label style="font-weight:600;color:#068aea;">Mật khẩu</label>
+      <input id="loginPass" type="password" required style="width:100%;padding:8px 6px;margin-bottom:13px;border-radius:7px;border:1px solid #d3e1ef;">
+      <button type="submit" style="background:#0585e7;color:#fff;padding:9px 16px;border-radius:8px;border:none;font-size:1rem;font-weight:600;width:100%;">Đăng nhập</button>
+      <div id="loginMsg" style="margin-top:10px;font-weight:600;color:#ff1111;"></div>
+    </form>
+  </div>
+</div>
 </body>
 </html>
