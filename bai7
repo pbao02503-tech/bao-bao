@@ -1,0 +1,10 @@
+// 7. Mức nước biển
+#include <iostream>
+using namespace std;
+int main() {
+    double risePerYear = 1.5; // mm
+    cout << "After 5 years: " << risePerYear * 5 << " mm" << endl;
+    cout << "After 7 years: " << risePerYear * 7 << " mm" << endl;
+    cout << "After 10 years: " << risePerYear * 10 << " mm" << endl;
+    return 0;
+}
