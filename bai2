@@ -1,0 +1,10 @@
+// 2. Dự đoán sale
+#include <iostream>
+using namespace std;
+int main() {
+    double percent = 0.58;
+    double companySales = 8.6e6;
+    double eastCoastSales = percent * companySales;
+    cout << "East Coast sales = " << eastCoastSales << endl;
+    return 0;
+}
