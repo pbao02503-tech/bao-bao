@@ -1,0 +1,17 @@
+// 17. Hoa hồng chứng khoán
+#include <iostream>
+using namespace std;
+int main() {
+    int shares = 750;
+    double pricePerShare = 35.0;
+    double commissionRate = 0.02;
+
+    double stockCost = shares * pricePerShare;
+    double commission = stockCost * commissionRate;
+    double totalPaid = stockCost + commission;
+
+    cout << "Stock cost: " << stockCost << endl;
+    cout << "Commission: " << commission << endl;
+    cout << "Total paid: " << totalPaid << endl;
+    return 0;
+}
