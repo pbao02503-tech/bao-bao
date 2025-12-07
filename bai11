@@ -1,0 +1,14 @@
+// 11. Quãng đường với mỗi bình xăng
+#include <iostream>
+using namespace std;
+int main() {
+    double tankGallons = 20.0;
+    double cityMPG = 23.5;
+    double highwayMPG = 28.9;
+    double cityDistance = tankGallons * cityMPG;
+    double highwayDistance = tankGallons * highwayMPG;
+
+    cout << "City distance: " << cityDistance << " miles" << endl;
+    cout << "Highway distance: " << highwayDistance << " miles" << endl;
+    return 0;
+}
