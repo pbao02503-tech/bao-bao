@@ -1,0 +1,14 @@
+// 20. Bao nhiêu sơn
+#include <iostream>
+using namespace std;
+int main() {
+    double coveragePerGallon = 340.0; // square feet per gallon
+    double height = 6.0;
+    double length = 100.0;
+    double areaOneCoat = height * length;
+    double areaTwoCoats = areaOneCoat * 2.0;
+
+    double gallonsNeeded = areaTwoCoats / coveragePerGallon;
+    cout << "Gallons needed: " << gallonsNeeded << endl;
+    return 0;
+}
