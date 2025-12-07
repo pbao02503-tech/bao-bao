@@ -1,0 +1,10 @@
+// 14. Thông tin cá nhân
+#include <iostream>
+using namespace std;
+int main() {
+    cout << "Ten: Nguyen Van A\n"
+            "Dia chi: So X, Phuong Y, Quan Z, Thanh pho H, ZIP 100000\n"
+            "So dien thoai: 0123-456-789\n"
+            "Chuyen nganh: Cong nghe thong tin\n";
+    return 0;
+}
