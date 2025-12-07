@@ -1,0 +1,10 @@
+// 12. Tính toán mẫu đất
+#include <iostream>
+using namespace std;
+int main() {
+    double squareFeetPerAcre = 43560.0;
+    double lotSize = 391876.0;
+    double acres = lotSize / squareFeetPerAcre;
+    cout << "Acres = " << acres << endl;
+    return 0;
+}
