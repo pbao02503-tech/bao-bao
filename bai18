@@ -1,0 +1,15 @@
+// 18. Tiêu thụ nước tăng lực
+#include <iostream>
+using namespace std;
+int main() {
+    int surveyed = 16500;
+    double percentDrink = 0.15;
+    double percentOrange = 0.58;
+
+    int drinkers = static_cast<int>(surveyed * percentDrink + 0.5);
+    int orangeLovers = static_cast<int>(drinkers * percentOrange + 0.5);
+
+    cout << "Drink energy drinks: " << drinkers << endl;
+    cout << "Prefer orange flavor: " << orangeLovers << endl;
+    return 0;
+}
