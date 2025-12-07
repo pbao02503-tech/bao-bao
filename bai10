@@ -1,0 +1,10 @@
+// 10. Số dặm trên mỗi gallon
+#include <iostream>
+using namespace std;
+int main() {
+    double gallons = 15.0;
+    double miles = 375.0;
+    double mpg = miles / gallons;
+    cout << "Miles per gallon = " << mpg << endl;
+    return 0;
+}
