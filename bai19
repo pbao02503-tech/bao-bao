@@ -1,0 +1,16 @@
+// 19. Nhiệt độ cao hàng năm
+#include <iostream>
+using namespace std;
+int main() {
+    double ny = 85.0, denver = 88.0, phoenix = 106.0;
+    double increaseRate = 0.02;
+
+    ny *= (1.0 + increaseRate);
+    denver *= (1.0 + increaseRate);
+    phoenix *= (1.0 + increaseRate);
+
+    cout << "New York July temp: " << ny << endl;
+    cout << "Denver July temp: " << denver << endl;
+    cout << "Phoenix July temp: " << phoenix << endl;
+    return 0;
+}
